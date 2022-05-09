@@ -5,6 +5,7 @@
 #include <Python.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <frameobject.h>
 #include <time.h>
 #if _WIN32
@@ -409,6 +410,8 @@ static inline struct EventNode* get_next_node(TracerObject* self)
 static int is_stdlib_object(PyObject * obj) {
     PyObject* type = PyObject_Repr(PyObject_Type(obj));
     const char* str_type = PyUnicode_AsUTF8(type);
+    printf("\nTYPE: %s\n", str_type);
+    fflush(stdout);
     Py_DECREF(type);
 
     if ((strcmp(str_type, "<class 'str'>") == 0)|
@@ -454,8 +457,8 @@ static int iter_object(PyObject* obj) {
     if ((strcmp(s, "<class 'list'>") == 0) |
         (strcmp(s, "<class 'set'>") == 0) |
         (strcmp(s, "<class 'tuple'>") == 0) |
-        (strcmp(s, "<class 'dict'>") == 0)) |
-        (strncmp("<list_iterator", s, 14) ){
+        (strcmp(s, "<class 'dict'>") == 0) |
+        (strcmp(s, "<class 'list_iterator'>") == 0)){
         PyObject* seq = PyObject_GetIter(obj);
         PyObject* item;
         if (!seq) {
@@ -525,6 +528,8 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         Py_DECREF(repr);
         idx++;
     }
+    printf("\nTOTAL RES: %d\n", total_res);
+    fflush(stdout);
     if (total_res) {
         PyDict_SetItemString(node->args, "func_args", func_arg_dict);
     }
