@@ -437,6 +437,8 @@ static int is_stdlib_object(PyObject * obj) {
         char *substr = (char *)calloc(1, end - start + 1);
         memcpy(substr, start, end - start);
         int res = 1;
+        printf("\nMODULE NAME: %s \n", substr);
+        fflush(stdout);
         for (size_t i = 0; i < sizeof(modules) / sizeof(modules[0]); i++)
         {
             if (strncmp(modules[i], substr, strlen(modules[i])) == 0) {
@@ -444,6 +446,8 @@ static int is_stdlib_object(PyObject * obj) {
                 break;
             };
         }
+        printf("\nRESULT: %d \n", res);
+        fflush(stdout);
         free(substr);
         return res;
     }
