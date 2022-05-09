@@ -423,6 +423,7 @@ static int is_stdlib_object(PyObject * obj) {
     }
     if (strncmp("<class '", str_type, 8) == 0) {
         const char *start = &str_type[8];
+        // <class '_pytest.config.PytestPluginManager'>
 
         char * end;
         int ch = '.';
@@ -438,7 +439,7 @@ static int is_stdlib_object(PyObject * obj) {
         int res = 1;
         for (size_t i = 0; i < sizeof(modules) / sizeof(modules[0]); i++)
         {
-            if (strncmp(substr, modules[i], strlen(modules[i])) == 0) {
+            if (strncmp(modules[i], substr, strlen(modules[i])) == 0) {
                 res -= 1;
                 break;
             };
