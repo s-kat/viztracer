@@ -413,7 +413,8 @@ static int is_stdlib_object(PyObject * obj) {
     printf("\nTYPE: %s\n", str_type);
     fflush(stdout);
     Py_DECREF(type);
-
+    printf("BEFORE IF\n");
+    fflush(stdout);
     if ((strcmp(str_type, "<class 'str'>") == 0)|
         (strcmp(str_type, "<class 'float'>") == 0) |
         (strcmp(str_type, "<class 'int'>") == 0) |
@@ -421,10 +422,15 @@ static int is_stdlib_object(PyObject * obj) {
         (strcmp(str_type, "<class 'bool'>") == 0)){
         return 0;
     }
+    printf("AFTER IF\n");
+    fflush(stdout);
     if (strncmp("<class '", str_type, 8) == 0) {
+        printf("IN IF\n");
+        fflush(stdout);
         const char *start = &str_type[8];
         // <class '_pytest.config.PytestPluginManager'>
-
+        printf("START %s\n", start);
+        fflush(stdout);
         char * end;
         int ch = '.';
         end = strchr(str_type, ch);
@@ -451,11 +457,15 @@ static int is_stdlib_object(PyObject * obj) {
         free(substr);
         return res;
     }
+    printf("RETURN\n");
+    fflush(stdout);
     return 0;
 }
 
 
 static int iter_object(PyObject* obj) {
+    printf("START ITER OBJ\n");
+    fflush(stdout);
     int total = 0;
     const char* s  = PyUnicode_AsUTF8(PyObject_Repr(PyObject_Type(obj)));
 
