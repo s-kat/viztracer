@@ -454,7 +454,8 @@ static int iter_object(PyObject* obj) {
     if ((strcmp(s, "<class 'list'>") == 0) |
         (strcmp(s, "<class 'set'>") == 0) |
         (strcmp(s, "<class 'tuple'>") == 0) |
-        (strcmp(s, "<class 'dict'>") == 0)){
+        (strcmp(s, "<class 'dict'>") == 0)) |
+        (strncmp("<list_iterator", s, 14) ){
         PyObject* seq = PyObject_GetIter(obj);
         PyObject* item;
         if (!seq) {
@@ -507,6 +508,7 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         PyObject* repr = PyObject_Repr(PyDict_GetItem(locals, name));
         printf("\n");
         PyObject_Print(repr, stdout, Py_PRINT_RAW);
+        // <list_iterator object at 0xffff7ba9f550>
         printf("\n");
         fflush(stdout);
         int res = iter_object(PyDict_GetItem(locals, name));
