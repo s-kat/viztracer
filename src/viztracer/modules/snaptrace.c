@@ -409,12 +409,14 @@ static inline struct EventNode* get_next_node(TracerObject* self)
 
 static int is_stdlib_object(PyObject * obj) {
     PyObject* type = PyObject_Repr(PyObject_Type(obj));
-    const char* str_type = PyUnicode_AsUTF8(type);
+    const char* str_type = "<class 'type'>";
     printf("\nTYPE: %s\n", str_type);
     fflush(stdout);
     Py_DECREF(type);
     printf("BEFORE IF\n");
     fflush(stdout);
+    // <class 'type'>
+    //const char* str_type = "<class 'type'>";
     if ((strcmp(str_type, "<class 'str'>") == 0)|
         (strcmp(str_type, "<class 'float'>") == 0) |
         (strcmp(str_type, "<class 'int'>") == 0) |
@@ -493,6 +495,8 @@ static int iter_object(PyObject* obj) {
         Py_DECREF(seq);
     } else {
         total += is_stdlib_object(obj);
+        printf("\nTOTAL: %d\n", total);
+        fflush(stdout);
     }
     return total;
 }
