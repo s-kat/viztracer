@@ -57,6 +57,313 @@ PyObject* trio_lowlevel_module = NULL;
 
 static PyObject* curr_task_getters[2] = {0};
 
+char modules[][30] =
+{
+    "marshal",
+    "_decimal",
+    "_md5",
+    "_zoneinfo",
+    "mmap",
+    "pyclbr",
+    "nt",
+    "selectors",
+    "ssl",
+    "_ssl",
+    "_winapi",
+    "contextlib",
+    "_stat",
+    "enum",
+    "_msi",
+    "_py_abc",
+    "_sha3",
+    "crypt",
+    "ensurepip",
+    "_overlapped",
+    "pstats",
+    "_contextvars",
+    "smtplib",
+    "_sha512",
+    "_curses_panel",
+    "email",
+    "_ctypes",
+    "_dbm",
+    "_scproxy",
+    "builtins",
+    "imp",
+    "lzma",
+    "unicodedata",
+    "_gdbm",
+    "_queue",
+    "pathlib",
+    "time",
+    "_tkinter",
+    "this",
+    "_codecs_hk",
+    "weakref",
+    "idlelib",
+    "resource",
+    "tracemalloc",
+    "winsound",
+    "types",
+    "difflib",
+    "typing",
+    "ipaddress",
+    "sys",
+    "_heapq",
+    "_codecs",
+    "msilib",
+    "argparse",
+    "curses",
+    "_pyio",
+    "cmd",
+    "binhex",
+    "graphlib",
+    "_signal",
+    "_struct",
+    "fcntl",
+    "genericpath",
+    "_posixshmem",
+    "struct",
+    "xmlrpc",
+    "_multiprocessing",
+    "_imp",
+    "array",
+    "codecs",
+    "zipimport",
+    "turtledemo",
+    "_bz2",
+    "_string",
+    "_thread",
+    "_warnings",
+    "tokenize",
+    "traceback",
+    "urllib",
+    "xml",
+    "http",
+    "mailcap",
+    "gettext",
+    "_posixsubprocess",
+    "_sitebuiltins",
+    "distutils",
+    "fractions",
+    "asyncio",
+    "signal",
+    "html",
+    "atexit",
+    "chunk",
+    "inspect",
+    "sunau",
+    "uuid",
+    "_lzma",
+    "socket",
+    "wsgiref",
+    "token",
+    "poplib",
+    "readline",
+    "zlib",
+    "mailbox",
+    "_sha1",
+    "zipfile",
+    "io",
+    "platform",
+    "cmath",
+    "unittest",
+    "base64",
+    "logging",
+    "filecmp",
+    "asynchat",
+    "pdb",
+    "trace",
+    "syslog",
+    "webbrowser",
+    "winreg",
+    "ast",
+    "_bisect",
+    "pkgutil",
+    "itertools",
+    "math",
+    "operator",
+    "pyexpat",
+    "dis",
+    "sqlite3",
+    "calendar",
+    "stringprep",
+    "termios",
+    "tty",
+    "_asyncio",
+    "reprlib",
+    "gc",
+    "nis",
+    "ntpath",
+    "_compression",
+    "aifc",
+    "gzip",
+    "symtable",
+    "statistics",
+    "_statistics",
+    "_collections",
+    "_weakrefset",
+    "posix",
+    "profile",
+    "dataclasses",
+    "compileall",
+    "venv",
+    "decimal",
+    "json",
+    "quopri",
+    "shelve",
+    "cgitb",
+    "faulthandler",
+    "_aix_support",
+    "copyreg",
+    "xdrlib",
+    "_ast",
+    "_sha256",
+    "hmac",
+    "_compat_pickle",
+    "datetime",
+    "_frozen_importlib",
+    "sre_compile",
+    "py_compile",
+    "_collections_abc",
+    "concurrent",
+    "sched",
+    "wave",
+    "bz2",
+    "_codecs_tw",
+    "keyword",
+    "tkinter",
+    "_csv",
+    "colorsys",
+    "tabnanny",
+    "_hashlib",
+    "shutil",
+    "_io",
+    "_sqlite3",
+    "grp",
+    "turtle",
+    "secrets",
+    "_codecs_jp",
+    "cgi",
+    "modulefinder",
+    "hashlib",
+    "doctest",
+    "antigravity",
+    "pwd",
+    "warnings",
+    "_crypt",
+    "_lsprof",
+    "importlib",
+    "bdb",
+    "stat",
+    "pydoc_data",
+    "nturl2path",
+    "numbers",
+    "zipapp",
+    "cProfile",
+    "pipes",
+    "re",
+    "imghdr",
+    "sndhdr",
+    "multiprocessing",
+    "_uuid",
+    "_codecs_cn",
+    "_elementtree",
+    "_codecs_kr",
+    "ctypes",
+    "binascii",
+    "fileinput",
+    "netrc",
+    "select",
+    "code",
+    "errno",
+    "locale",
+    "_json",
+    "site",
+    "queue",
+    "glob",
+    "_socket",
+    "_tracemalloc",
+    "_multibytecodec",
+    "contextvars",
+    "linecache",
+    "random",
+    "tarfile",
+    "_bootsubprocess",
+    "_markupbase",
+    "posixpath",
+    "socketserver",
+    "_operator",
+    "_opcode",
+    "sre_constants",
+    "opcode",
+    "textwrap",
+    "ossaudiodev",
+    "dbm",
+    "pty",
+    "ftplib",
+    "_curses",
+    "_datetime",
+    "_pydecimal",
+    "nntplib",
+    "pydoc",
+    "csv",
+    "timeit",
+    "tempfile",
+    "_blake2",
+    "sysconfig",
+    "pickletools",
+    "heapq",
+    "_strptime",
+    "optparse",
+    "rlcompleter",
+    "copy",
+    "_codecs_iso2022",
+    "getopt",
+    "uu",
+    "fnmatch",
+    "_random",
+    "_threading_local",
+    "asyncore",
+    "plistlib",
+    "collections",
+    "functools",
+    "threading",
+    "abc",
+    "_pickle",
+    "mimetypes",
+    "_weakref",
+    "_sre",
+    "pprint",
+    "bisect",
+    "smtpd",
+    "lib2to3",
+    "pickle",
+    "telnetlib",
+    "zoneinfo",
+    "__future__",
+    "_symtable",
+    "_functools",
+    "imaplib",
+    "_abc",
+    "os",
+    "codeop",
+    "string",
+    "getpass",
+    "audioop",
+    "configparser",
+    "sre_parse",
+    "encodings",
+    "msvcrt",
+    "subprocess",
+    "runpy",
+    "_frozen_importlib_external",
+    "shlex",
+    "_osx_support",
+    "_locale",
+    "spwd"
+};
+
 #if _WIN32
 extern LARGE_INTEGER qpc_freq; 
 #endif
@@ -97,6 +404,80 @@ static inline struct EventNode* get_next_node(TracerObject* self)
     return node;
 }
 
+
+static int is_stdlib_object(PyObject * obj) {
+    PyObject* type = PyObject_Repr(PyObject_Type(obj));
+    const char* str_type = PyUnicode_AsUTF8(type);
+    Py_DECREF(type);
+
+    if ((strcmp(str_type, "<class 'str'>") == 0)|
+        (strcmp(str_type, "<class 'float'>") == 0) |
+        (strcmp(str_type, "<class 'int'>") == 0) |
+        (strcmp(str_type, "<class 'NoneType'>") == 0) |
+        (strcmp(str_type, "<class 'bool'>") == 0)){
+        return 0;
+    }
+    if (strncmp("<class '", str_type, 8) == 0) {
+        const char *start = &str_type[8];
+
+        char * end;
+        int ch = '.';
+        end = strchr(str_type, ch);
+
+        if (!end) {
+            ch = '>';
+            end = strchr(str_type, ch) - 1;
+        }
+        // Note the + 1 here, to have a null terminated substring
+        char *substr = (char *)calloc(1, end - start + 1);
+        memcpy(substr, start, end - start);
+        int res = 1;
+        for (size_t i = 0; i < sizeof(modules) / sizeof(modules[0]); i++)
+        {
+            if (strncmp(substr, modules[i], strlen(modules[i])) == 0) {
+                res -= 1;
+                break;
+            };
+        }
+        free(substr);
+        return res;
+    }
+    return 0;
+}
+
+
+static int iter_object(PyObject* obj) {
+    int total = 0;
+    const char* s  = PyUnicode_AsUTF8(PyObject_Repr(PyObject_Type(obj)));
+
+    if ((strcmp(s, "<class 'list'>") == 0) |
+        (strcmp(s, "<class 'set'>") == 0) |
+        (strcmp(s, "<class 'tuple'>") == 0) |
+        (strcmp(s, "<class 'dict'>") == 0)){
+        PyObject* seq = PyObject_GetIter(obj);
+        PyObject* item;
+        if (!seq) {
+            Py_DECREF(seq);
+            return total;
+        }
+        while((item=PyIter_Next(seq))) {
+            PyObject_Print(PyObject_Repr(item), stdout, Py_PRINT_RAW);
+            if (!item) {
+                break;
+            }
+            total += iter_object(item);
+        }
+        if (item) {
+            Py_DECREF(item);
+        }
+        Py_DECREF(seq);
+    } else {
+        total += is_stdlib_object(obj);
+    }
+    return total;
+}
+
+
 static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
 {
     PyObject* func_arg_dict = PyDict_New();
@@ -117,12 +498,19 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
     if (code->co_flags & CO_VARKEYWORDS) {
         name_length ++;
     }
-
+    int total_res = 1;
     while (idx < name_length) {
         // Borrowed
         PyObject* name = PyTuple_GET_ITEM(names, idx);
         // New
         PyObject* repr = PyObject_Repr(PyDict_GetItem(locals, name));
+
+        int res = iter_object(PyDict_GetItem(locals, name));
+
+        if (res) {
+            total_res = 0;
+        }
+
         if (!repr) {
             repr = PyUnicode_FromString("Not Displayable");
             PyErr_Clear();
@@ -131,8 +519,9 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         Py_DECREF(repr);
         idx++;
     }
-
-    PyDict_SetItemString(node->args, "func_args", func_arg_dict);
+    if (total_res) {
+        PyDict_SetItemString(node->args, "func_args", func_arg_dict);
+    }
     Py_DECREF(func_arg_dict);
 }
 
