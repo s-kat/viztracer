@@ -4,6 +4,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <frameobject.h>
 #include <time.h>
 #if _WIN32
@@ -504,7 +505,10 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         PyObject* name = PyTuple_GET_ITEM(names, idx);
         // New
         PyObject* repr = PyObject_Repr(PyDict_GetItem(locals, name));
-
+        printf("\n");
+        PyObject_Print(repr, stdout, Py_PRINT_RAW);
+        printf("\n");
+        fflush(stdout);
         int res = iter_object(PyDict_GetItem(locals, name));
 
         if (res) {
