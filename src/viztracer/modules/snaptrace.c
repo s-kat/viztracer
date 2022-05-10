@@ -550,9 +550,9 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
     //printf("\nTOTAL RES: %d\n", total_res);
     //fflush(stdout);
     PyDict_SetItemString(node->args, "func_args", func_arg_dict);
-    //if (total_res) {
-    //    PyDict_SetItemString(node->args, "func_args", func_arg_dict);
-    //}
+    if (total_res) {
+        PyDict_SetItemString(node->args, "func_args", func_arg_dict);
+    }
     //printf("\nBEFORE  DECREF: %d\n", total_res);
     //fflush(stdout);
     Py_DECREF(func_arg_dict);
