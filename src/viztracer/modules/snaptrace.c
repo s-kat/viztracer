@@ -410,10 +410,10 @@ static inline struct EventNode* get_next_node(TracerObject* self)
 static int is_stdlib_object(PyObject * obj) {
     PyObject* type = PyObject_Repr(PyObject_Type(obj));
     const char* str_type = "<class 'type'>";
-    printf("\nTYPE: %s\n", str_type);
-    fflush(stdout);
-    printf("BEFORE IF\n");
-    fflush(stdout);
+    //printf("\nTYPE: %s\n", str_type);
+    //fflush(stdout);
+    //printf("BEFORE IF\n");
+    //fflush(stdout);
     // <class 'type'>
     //const char* str_type = "<class 'type'>";
     if ((strcmp(str_type, "<class 'str'>") == 0)|
@@ -423,15 +423,15 @@ static int is_stdlib_object(PyObject * obj) {
         (strcmp(str_type, "<class 'bool'>") == 0)){
         return 0;
     }
-    printf("AFTER IF\n");
-    fflush(stdout);
+    //printf("AFTER IF\n");
+    //fflush(stdout);
     if (strncmp("<class '", str_type, 8) == 0) {
-        printf("IN IF\n");
-        fflush(stdout);
+        //printf("IN IF\n");
+        //fflush(stdout);
         const char *start = &str_type[8];
         // <class '_pytest.config.PytestPluginManager'>
-        printf("START %s\n", start);
-        fflush(stdout);
+        //printf("START %s\n", start);
+        //fflush(stdout);
         char * end;
         int ch = '.';
         end = strchr(str_type, ch);
@@ -444,8 +444,8 @@ static int is_stdlib_object(PyObject * obj) {
         char *substr = (char *)calloc(1, end - start + 1);
         memcpy(substr, start, end - start);
         int res = 1;
-        printf("\nMODULE NAME: %s \n", substr);
-        fflush(stdout);
+        //printf("\nMODULE NAME: %s \n", substr);
+        //fflush(stdout);
         for (size_t i = 0; i < sizeof(modules) / sizeof(modules[0]); i++)
         {
             if (strncmp(modules[i], substr, strlen(modules[i])) == 0) {
@@ -453,22 +453,22 @@ static int is_stdlib_object(PyObject * obj) {
                 break;
             };
         }
-        printf("\nRESULT: %d \n", res);
-        fflush(stdout);
+        //printf("\nRESULT: %d \n", res);
+        //fflush(stdout);
         free(substr);
         Py_DECREF(type);
         return res;
     }
-    printf("RETURN\n");
-    fflush(stdout);
+    //printf("RETURN\n");
+    //fflush(stdout);
     Py_DECREF(type);
     return 0;
 }
 
 
 static int iter_object(PyObject* obj) {
-    printf("START ITER OBJ\n");
-    fflush(stdout);
+    //printf("START ITER OBJ\n");
+    //fflush(stdout);
     int total = 0;
     const char* s  = PyUnicode_AsUTF8(PyObject_Repr(PyObject_Type(obj)));
 
@@ -495,8 +495,8 @@ static int iter_object(PyObject* obj) {
         Py_DECREF(seq);
     } else {
         total += is_stdlib_object(obj);
-        printf("\nTOTAL: %d\n", total);
-        fflush(stdout);
+        //printf("\nTOTAL: %d\n", total);
+        //fflush(stdout);
     }
     return total;
 }
@@ -528,11 +528,11 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         PyObject* name = PyTuple_GET_ITEM(names, idx);
         // New
         PyObject* repr = PyObject_Repr(PyDict_GetItem(locals, name));
-        printf("\n");
-        PyObject_Print(repr, stdout, Py_PRINT_RAW);
+        //printf("\n");
+        //PyObject_Print(repr, stdout, Py_PRINT_RAW);
         // <list_iterator object at 0xffff7ba9f550>
-        printf("\n");
-        fflush(stdout);
+        //printf("\n");
+        //fflush(stdout);
         int res = iter_object(PyDict_GetItem(locals, name));
 
         if (res) {
@@ -547,17 +547,17 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         Py_DECREF(repr);
         idx++;
     }
-    printf("\nTOTAL RES: %d\n", total_res);
-    fflush(stdout);
+    //printf("\nTOTAL RES: %d\n", total_res);
+    //fflush(stdout);
     PyDict_SetItemString(node->args, "func_args", func_arg_dict);
     //if (total_res) {
     //    PyDict_SetItemString(node->args, "func_args", func_arg_dict);
     //}
-    printf("\nBEFORE  DECREF: %d\n", total_res);
-    fflush(stdout);
+    //printf("\nBEFORE  DECREF: %d\n", total_res);
+    //fflush(stdout);
     Py_DECREF(func_arg_dict);
-    printf("\nAFTER  DECREF: %d\n", total_res);
-    fflush(stdout);
+    //printf("\nAFTER  DECREF: %d\n", total_res);
+    //fflush(stdout);
 }
 
 static void verbose_printf(TracerObject* self, int v, const char* fmt, ...)
@@ -789,8 +789,8 @@ snaptrace_tracefunc(PyObject* obj, PyFrameObject* frame, int what, PyObject* arg
             if (CHECK_FLAG(self->check_flags, SNAPTRACE_LOG_FUNCTION_ARGS)) {
                 log_func_args(info->stack_top, frame);
             }
-            printf("\nEXIT CHECK\n");
-            fflush(stdout);
+            //printf("\nEXIT CHECK\n");
+            //fflush(stdout);
         } else if (is_return) {
             struct FunctionNode* stack_top = info->stack_top;
             if (stack_top->prev) {
