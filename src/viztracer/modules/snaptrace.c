@@ -553,7 +553,11 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
     //if (total_res) {
     //    PyDict_SetItemString(node->args, "func_args", func_arg_dict);
     //}
+    printf("\nBEFORE  DECREF: %d\n", total_res);
+    fflush(stdout);
     Py_DECREF(func_arg_dict);
+    printf("\nAFTER  DECREF: %d\n", total_res);
+    fflush(stdout);
 }
 
 static void verbose_printf(TracerObject* self, int v, const char* fmt, ...)
