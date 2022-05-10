@@ -474,8 +474,7 @@ static int iter_object(PyObject* obj) {
     if ((strcmp(s, "<class 'list'>") == 0) |
         (strcmp(s, "<class 'set'>") == 0) |
         (strcmp(s, "<class 'tuple'>") == 0) |
-        (strcmp(s, "<class 'dict'>") == 0) |
-        (strcmp(s, "<class 'list_iterator'>") == 0)){
+        (strcmp(s, "<class 'dict'>") == 0)){
         PyObject* seq = PyObject_GetIter(obj);
         PyObject* item;
         if (!seq) {
