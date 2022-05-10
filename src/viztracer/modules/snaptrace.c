@@ -409,7 +409,7 @@ static inline struct EventNode* get_next_node(TracerObject* self)
 
 static int is_stdlib_object(PyObject * obj) {
     PyObject* type = PyObject_Repr(PyObject_Type(obj));
-    const char* str_type = "<class 'type'>";
+    const char* str_type = PyUnicode_AsUTF8(type);
     //printf("\nTYPE: %s\n", str_type);
     //fflush(stdout);
     //printf("BEFORE IF\n");
