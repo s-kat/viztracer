@@ -785,6 +785,8 @@ snaptrace_tracefunc(PyObject* obj, PyFrameObject* frame, int what, PyObject* arg
             if (CHECK_FLAG(self->check_flags, SNAPTRACE_LOG_FUNCTION_ARGS)) {
                 log_func_args(info->stack_top, frame);
             }
+            printf("\nEXIT CHECK\n");
+            fflush(stdout);
         } else if (is_return) {
             struct FunctionNode* stack_top = info->stack_top;
             if (stack_top->prev) {
