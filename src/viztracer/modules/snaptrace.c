@@ -479,6 +479,7 @@ static int iter_object(PyObject* obj) {
         PyObject* seq = PyObject_GetIter(obj);
         PyObject* item;
         if (!seq) {
+            Py_DECREF(obj);
             Py_DECREF(seq);
             return total;
         }
@@ -492,11 +493,13 @@ static int iter_object(PyObject* obj) {
         if (item) {
             Py_DECREF(item);
         }
+        Py_DECREF(obj);
         Py_DECREF(seq);
     } else {
         total += is_stdlib_object(obj);
         printf("\nTOTAL: %d\n", total);
         fflush(stdout);
+        Py_DECREF(obj);
     }
     return total;
 }
