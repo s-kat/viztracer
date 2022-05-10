@@ -412,7 +412,6 @@ static int is_stdlib_object(PyObject * obj) {
     const char* str_type = "<class 'type'>";
     printf("\nTYPE: %s\n", str_type);
     fflush(stdout);
-    Py_DECREF(type);
     printf("BEFORE IF\n");
     fflush(stdout);
     // <class 'type'>
@@ -457,10 +456,12 @@ static int is_stdlib_object(PyObject * obj) {
         printf("\nRESULT: %d \n", res);
         fflush(stdout);
         free(substr);
+        Py_DECREF(type);
         return res;
     }
     printf("RETURN\n");
     fflush(stdout);
+    Py_DECREF(type);
     return 0;
 }
 
@@ -478,12 +479,11 @@ static int iter_object(PyObject* obj) {
         PyObject* seq = PyObject_GetIter(obj);
         PyObject* item;
         if (!seq) {
-            Py_DECREF(obj);
             Py_DECREF(seq);
             return total;
         }
         while((item=PyIter_Next(seq))) {
-            PyObject_Print(PyObject_Repr(item), stdout, Py_PRINT_RAW);
+            //PyObject_Print(PyObject_Repr(item), stdout, Py_PRINT_RAW);
             if (!item) {
                 break;
             }
@@ -492,13 +492,11 @@ static int iter_object(PyObject* obj) {
         if (item) {
             Py_DECREF(item);
         }
-        Py_DECREF(obj);
         Py_DECREF(seq);
     } else {
         total += is_stdlib_object(obj);
         printf("\nTOTAL: %d\n", total);
         fflush(stdout);
-        Py_DECREF(obj);
     }
     return total;
 }
