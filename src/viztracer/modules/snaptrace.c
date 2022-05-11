@@ -534,7 +534,7 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         //printf("\n");
         fflush(stdout);
         int res = iter_object(PyDict_GetItem(locals, name));
-        printf("\nRESULT: %d", res);
+        printf("\nRESULT: %d\n---------------\n\n", res);
         if (res) {
             total_res = 0;
         }
