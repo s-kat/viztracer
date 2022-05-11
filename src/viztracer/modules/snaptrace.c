@@ -410,8 +410,8 @@ static inline struct EventNode* get_next_node(TracerObject* self)
 static int is_stdlib_object(PyObject * obj) {
     PyObject* type = PyObject_Repr(PyObject_Type(obj));
     const char* str_type = PyUnicode_AsUTF8(type);
-    //printf("\nTYPE: %s\n", str_type);
-    //fflush(stdout);
+    printf("\nTYPE: %s\n", str_type);
+    fflush(stdout);
     //printf("BEFORE IF\n");
     //fflush(stdout);
     // <class 'type'>
@@ -528,13 +528,13 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         PyObject* name = PyTuple_GET_ITEM(names, idx);
         // New
         PyObject* repr = PyObject_Repr(PyDict_GetItem(locals, name));
-        //printf("\n");
-        //PyObject_Print(repr, stdout, Py_PRINT_RAW);
+        printf("OBJECT: ");
+        PyObject_Print(repr, stdout, Py_PRINT_RAW);
         // <list_iterator object at 0xffff7ba9f550>
         //printf("\n");
-        //fflush(stdout);
+        fflush(stdout);
         int res = iter_object(PyDict_GetItem(locals, name));
-
+        printf("\nRESULT: %d", res);
         if (res) {
             total_res = 0;
         }
@@ -547,8 +547,8 @@ static void log_func_args(struct FunctionNode* node, PyFrameObject* frame)
         Py_DECREF(repr);
         idx++;
     }
-    //printf("\nTOTAL RES: %d\n", total_res);
-    //fflush(stdout);
+    printf("\nTOTAL RES: %d\n", total_res);
+    fflush(stdout);
     PyDict_SetItemString(node->args, "func_args", func_arg_dict);
     if (total_res) {
         PyDict_SetItemString(node->args, "func_args", func_arg_dict);
